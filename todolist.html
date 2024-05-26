@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <main class="max-w-xl mx-auto py-20">
+      <div id="app">
+        <div class="max-w-xl mx-auto space-y-2 px-6">
+          <h2
+            class="font-bold text-xl text-yellow-500 border-b pb-2 border-b-yellow-500"
+          >
+            TODO LIST
+          </h2>
+          <form class="space-y-3" @submit.prevent="handleSubmit">
+            <div>
+              <label
+                for="task"
+                class="mb-1 block font-normal text-sm text-gray-400"
+                >Your Task</label
+              >
+              <input
+                id="task"
+                type="text"
+                class="w-full border border-gray-200 py-2 px-4 rounded placeholder:text-sm"
+                placeholder="Enter your task here"
+                v-model="newTask.task"
+              />
+            </div>
+            <div>
+              <label
+                for="status"
+                class="mb-1 block font-normal text-sm text-gray-400"
+                >Status</label
+              >
+              <input
+                id="status"
+                type="text"
+                class="w-full border border-gray-200 py-2 px-4 rounded placeholder:text-sm"
+                placeholder="Status"
+                v-model="newTask.status"
+              />
+            </div>
+
+            <div>
+              <button
+                type="submit"
+                class="bg-blue-500 text-white px-4 py-2 w-full rounded"
+              >
+                Add Todo
+              </button>
+            </div>
+          </form>
+
+          <div class="mt-4">
+            <div
+              v-if="tasks.length>0"
+              v-for="task in tasks"
+              class="border border-gray-200 p-4 bg-gray-100 mb-1"
+            >
+              <div>
+                <p>{{task.task}}</p>
+                <p>{{task.status}}</p>
+              </div>
+
+              <div class="mt-2">
+                <button
+                  @click="deleteTask(task.id)"
+                  class="bg-red-500 text-white px-4 py-2 w-full rounded"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+
+            <p v-else class="text-red-400 text-sm">No Task Added yet</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script>
+      const { createApp } = Vue;
+
+      const app = createApp({
+        data() {
+          return {
+            tasks: [],
+            newTask: {
+              task: "",
+              status: "",
+            },
+          };
+        },
+        methods: {
+          handleSubmit() {
+            this.tasks.push({ id: Math.random(), ...this.newTask });
+            this.newTask = {
+              task: "",
+              status: "",
+            };
+          },
+          deleteTask(taskId) {
+            this.tasks = this.tasks.filter((task) => task.id !== taskId);
+          },
+        },
+      });
+
+      app.mount("#app");
+    </script>
+  </body>
+</html>
