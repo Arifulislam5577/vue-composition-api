@@ -19,7 +19,21 @@
   </head>
   <body>
     <main class="max-w-xl mx-auto py-20">
-      <div id="app"></div>
+      <div id="app">
+        <div class="max-w-xl mx-auto px-6">
+          <h2>{{title}}</h2>
+
+          <div class="mt-4">
+            <button
+              :disabled="disabled"
+              @click="increment"
+              class="bg-blue-500 text-white px-4 py-2 disabled:bg-blue-100"
+            >
+              {{count}} Counter
+            </button>
+          </div>
+        </div>
+      </div>
     </main>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -29,9 +43,26 @@
 
       const app = createApp({
         data() {
-          return {};
+          return {
+            count: 0,
+            disabled: false,
+            title: "Vue Watcher",
+          };
         },
-        methods: {},
+
+        methods: {
+          increment() {
+            this.count++;
+          },
+        },
+        watch: {
+          count(value) {
+            if (value >= 5) {
+              this.disabled = true;
+              this.title = "Counter End";
+            }
+          },
+        },
       });
 
       app.mount("#app");
