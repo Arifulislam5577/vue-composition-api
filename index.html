@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <main class="max-w-xl mx-auto py-20">
+      <div id="app">
+        <div class="max-w-xl mx-auto space-y-2">
+          <div
+            v-for="product in products"
+            class="border border-gray-200 p-4 bg-gray-100 flex justify-between items-center mb-5"
+          >
+            <div>
+              <div>{{ product.name }}</div>
+              <div>${{ product.price }}</div>
+            </div>
+            <div>
+              <button
+                @click="addToCart(product.id)"
+                class="bg-blue-500 text-white px-4 py-2"
+              >
+                Add To Cart
+              </button>
+            </div>
+          </div>
+          <div class="p-4 border border-gray-100 flex justify-between">
+            <p>Checkout</p>
+            <p>{{cart.length}} Items</p>
+            <p>${{cart.reduce((total, p) => total + p.price, 0)}}</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script>
+      const { createApp } = Vue;
+
+      const app = createApp({
+        data() {
+          return {
+            products: [
+              {
+                id: 1,
+                name: "Product 1",
+                price: 100,
+              },
+              {
+                id: 2,
+                name: "Product 2",
+                price: 200,
+              },
+              {
+                id: 3,
+                name: "Product 3",
+                price: 300,
+              },
+              {
+                id: 4,
+                name: "Product 4",
+                price: 400,
+              },
+              {
+                id: 5,
+                name: "Product 5",
+                price: 500,
+              },
+            ],
+            cart: [],
+          };
+        },
+        methods: {
+          addToCart(productId) {
+            const product = this.products.find((p) => p.id === productId);
+
+            this.cart.push(product);
+          },
+        },
+      });
+
+      app.mount("#app");
+    </script>
+  </body>
+</html>
