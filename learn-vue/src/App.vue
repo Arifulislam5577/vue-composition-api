@@ -1,20 +1,26 @@
 <script setup>
-import VueProps from './components/VueProps.vue'
-
-import { ref } from 'vue'
-const products = ref([
-  { id: 1, name: 'Product 1', price: 100 },
-  { id: 2, name: 'Product 2', price: 200 },
-  { id: 3, name: 'Product 3', price: 300 },
-  { id: 4, name: 'Product 4', price: 400 },
-  { id: 5, name: 'Product 5', price: 500 }
-])
+import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
-  <main class="py-20 max-w-xl mx-auto">
-    <VueProps v-for="product in products" :key="product.id" :product="product" />
+  <header class="bg-slate-900 py-3 px-6 text-white">
+    <div class="container mx-auto flex justify-between">
+      <p>Vue Router</p>
+
+      <ul class="flex gap-3">
+        <li>
+          <RouterLink to="/">Home</RouterLink>
+        </li>
+        <li>
+          <RouterLink to="/about">About</RouterLink>
+        </li>
+        <li>
+          <RouterLink to="/blogs">Blogs</RouterLink>
+        </li>
+      </ul>
+    </div>
+  </header>
+  <main>
+    <RouterView />
   </main>
 </template>
-
-<style scoped></style>
